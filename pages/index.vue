@@ -18,7 +18,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col order="2" order-md="1">
+        <v-col cols="12" md="6" order="2" order-md="1">
           <info-form/>
         </v-col>
         <v-col cols=12 md="6" order="1" order-md="2" v-if="selected!=''">

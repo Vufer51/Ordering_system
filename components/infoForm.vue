@@ -1,6 +1,10 @@
 <template>
 <v-form>
-  zzz
+  <v-card>
+    <v-card-text>
+    <v-text-field></v-text-field>
+    </v-card-text>
+  </v-card>
 </v-form>
 </template>
 
