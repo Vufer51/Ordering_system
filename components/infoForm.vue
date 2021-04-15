@@ -4,40 +4,42 @@
       <v-card-text>
         <v-row>
           <v-col sm="6" cols="12">
-            <v-text-field label="ФИО" :rules="[rules.required]"/>
-            <v-text-field label="Должность" :rules="[rules.required]"/>
-            <v-text-field label="Отдел/участок"/>
-            <v-text-field label="Контактный телефон"/>
-            <v-text-field label="E-mail" :rules="[rules.required, rules.email]"/>
+            <v-text-field label="ФИО" :rules="[rules.required]" v-model="collectedData.name"/>
+            <v-text-field label="Должность" :rules="[rules.required]" v-model="collectedData.position"/>
+            <v-text-field label="Отдел/участок" v-model="collectedData.department"/>
+            <v-text-field label="Контактный телефон" v-model="collectedData.phone"/>
+            <v-text-field label="E-mail" :rules="[rules.required, rules.email]" v-model="collectedData.email"/>
           </v-col>
           <v-col>
             <v-select
               label="Тип техники"
               :items="techTypes"
               :rules="[rules.required]"
+              v-model="collectedData.techType"
             />
             <v-select
               label="Характер работ"
               :items="['Техническое обслуживание','Диагностика', 'Ремонт']"
               multiple
-              v-model="dataWorks"
+              v-model="collectedData.works"
               :rules="[rules.notEmptyArray]"
 
             />
             <v-row>
               <v-col>
-                <v-text-field label="Модель"/>
-                <v-text-field label="Заводской №"/>
+                <v-text-field label="Модель" v-model="collectedData.model"/>
+                <v-text-field label="Заводской №" v-model="collectedData.number"/>
               </v-col>
               <v-col>
                 <v-combobox
                   label="Год выпуска"
                   :items="years"
                   :rules="[rules.notFuture]"
+                  v-model="collectedData.year"
                 />
                 <v-file-input
                   @change="previewImages"
-                  v-model="images"
+                  v-model="collectedData.images"
                   multiple
                   accept="image/png, image/jpeg, image/bmp"
                   prepend-icon="mdi-camera"
@@ -80,9 +82,20 @@ export default {
   name: 'infoForm',
   data () {
     return {
-      images: null,
+      collectedData: {
+        name: '',
+        position: '',
+        department: '',
+        phone: '',
+        email: '',
+        techType: '',
+        works: [],
+        model: '',
+        number: '',
+        year: '',images: null,
+      },
+
       imageUrls: [],
-      dataWorks: [],
       currentYear: new Date().getFullYear(),
       techTypes: [
         'Кран',
@@ -108,13 +121,25 @@ export default {
     }
 
   },
+  watch:{
+    collectedData :{
+      handler(val)
+      {
+
+        this.$emit('dataChanged', this.collectedData)
+
+      },
+      deep:true
+    },
+
+  },
   methods: {
-    removeImage(n) {
-      this.images.splice(n,1)
-      this.imageUrls.splice(n,1)
+    removeImage (n) {
+      this.collectedData.images.splice(n, 1)
+      this.imageUrls.splice(n, 1)
     },
     previewImages () {
-      this.images.forEach(image => {
+      this.collectedData.images.forEach(image => {
         this.imageUrls.push(URL.createObjectURL(image))
       })
     }

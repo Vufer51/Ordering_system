@@ -33,7 +33,7 @@
           </v-card>
         </v-col>
         <v-col order="2" order-md="1">
-          <info-form/>
+          <info-form @dataChanged="dataUpdated"/>
         </v-col>
       </v-row>
     </v-col>
@@ -67,6 +67,9 @@ export default {
     }
   },
   methods: {
+    dataUpdated (e) {
+      console.log(e)
+    },
     async GetSuggestions () {
       this.loading = true
       await this.$axios.post('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party',
