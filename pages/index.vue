@@ -17,11 +17,8 @@
           />
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12" md="6" order="2" order-md="1">
-          <info-form/>
-        </v-col>
-        <v-col cols=12 md="6" order="1" order-md="2" v-if="selected!=''">
+      <v-row >
+        <v-col  v-if="selected!=''" cols=12 md="6" order="1" order-md="2">
           <v-card>
             <v-card-title>
               {{selectedInfo.data.name.full_with_opf}}
@@ -34,6 +31,9 @@
               </v-row>
             </v-card-text>
           </v-card>
+        </v-col>
+        <v-col order="2" order-md="1">
+          <info-form/>
         </v-col>
       </v-row>
     </v-col>
